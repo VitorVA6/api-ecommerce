@@ -4,8 +4,8 @@ export type User = {
     email: string,
     password: string,
     role: 'user' | 'admin'
-    password_reset_token?: ResetToken | undefined,
-    email_reset_token?: ResetToken | undefined,
+    password_reset_token: ResetToken | undefined,
+    email_reset_token: ResetToken | undefined,
 }
 
 type ResetToken = {
