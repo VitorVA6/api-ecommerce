@@ -1,6 +1,5 @@
 import Validator from "../../../../application/contracts/utils/validator";
-import { UserModel } from "../../../../application/models/User";
-import {z} from 'zod'
+import {z, ZodError} from 'zod'
 
 type input = {
     name: string,
@@ -17,8 +16,12 @@ export default class ZodUserValidator implements Validator<input> {
             email: z.string().email(),
             password: z.string().min(8),
         })
+        try{
 
-        user_schema.parse({name, email, password})
+            user_schema.parse({name, email, password})
+        }catch(err){
+            if(err instanceof ZodError) throw new Error(err.errors[0].message)
+        }
     }
 
 }

@@ -1,5 +1,9 @@
-import { User } from "../entities/user";
+type input = {
+    name: string,
+    email: string,
+    password: string
+}
 
 export default interface SignupUser {
-    execute: (user: User) => Promise<void>
+    execute: (props: input) => Promise<void>
 }
