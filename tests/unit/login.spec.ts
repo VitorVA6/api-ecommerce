@@ -50,12 +50,27 @@ describe('Login user', () => {
         }
 
         const token = await login_user_service.execute(login_user)
-        
         const user = await memory_user_repository.find_by_email(login_user.email)
         if(!user) fail()
 
         const user_info = jwt_handler.validate(token)
 
         expect(user_info).toBe(user.id)
+    })
+    it('Deve lançar erro de senha incorreta', async () => {
+        const login_user = {
+            email: 'vitor@gmail.com',
+            password: 'teste12'
+        }        
+
+        await expect(login_user_service.execute(login_user)).rejects.toThrow(new Error("Senha incorreta."))
+    })
+    it('Deve lançar erro de usuário não existe', async () => {
+        const login_user = {
+            email: 'vit@gmail.com',
+            password: 'teste123'
+        }        
+
+        await expect(login_user_service.execute(login_user)).rejects.toThrow(new Error("Usuário não existe."))
     })
 })
