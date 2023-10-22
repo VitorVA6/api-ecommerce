@@ -2,7 +2,7 @@ import UserRepository from "../../src/application/contracts/repositories/user-re
 import Encrypter from "../../src/application/contracts/utils/encrypter"
 import Validator from "../../src/application/contracts/utils/validator"
 import SignupUserService from "../../src/application/services/users/signup"
-import SignupUser from "../../src/domain/use-cases/signup-user"
+import SignupUser from "../../src/domain/use-cases/users/signup"
 import InMemoryUserRepository from "../../src/infra/repositories/in-memory/user-repository"
 import BcryptEncrypt from "../../src/infra/utils/bcrypt-encrypter"
 import ZodUserValidator from "../../src/infra/utils/validators/zod/user-validator"

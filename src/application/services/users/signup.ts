@@ -1,5 +1,5 @@
 import { User } from "../../../domain/entities/user";
-import SignupUser from "../../../domain/use-cases/signup-user";
+import SignupUser from "../../../domain/use-cases/users/signup";
 import UserRepository from "../../contracts/repositories/user-repository";
 import Encrypter from "../../contracts/utils/encrypter";
 import Validator from "../../contracts/utils/validator";
