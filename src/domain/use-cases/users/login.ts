@@ -3,11 +3,6 @@ type input = {
     password: string
 }
 
-type output = {
-    token: string,
-    user_name: string
-}
-
 export default interface LoginUser {
-    execute: (props: input) => Promise<output>
+    execute: (props: input) => Promise<string>
 }

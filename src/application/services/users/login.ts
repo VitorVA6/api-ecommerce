@@ -8,11 +8,6 @@ type input = {
     password: string
 }
 
-type output = {
-    token: string,
-    user_name: string
-}
-
 export default class LoginUserService implements LoginUser {
 
     constructor(
@@ -21,7 +16,7 @@ export default class LoginUserService implements LoginUser {
         private readonly jwt_handler: JWTHandler
     ) {}
 
-    async execute({email, password}: input): Promise<output>{
+    async execute({email, password}: input): Promise<string>{
         if(!email || !password) throw new Error("E-mail e senha são obrigatórios.")
 
         const user = await this.user_repository.find_by_email(email)
@@ -32,12 +27,9 @@ export default class LoginUserService implements LoginUser {
 
         if(!password_matches) throw new Error("Senha incorreta.")
 
-        const token = await this.jwt_handler.token_generator(user.id!)
+        const token = this.jwt_handler.generate(user.id!)
 
-        return {
-            token,
-            user_name: user.name
-        }
+        return token
     }
 
 }
