@@ -38,6 +38,30 @@ describe('Signup user', () => {
         }catch{
             fail()
         }
-        
+    })
+    it('Deve lançar erro de email em formato inválido', async () => {
+        const new_user = {
+            name: 'Vitor',
+            email: 'vva@g',
+            password: 'teste123'
+        }
+        await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('Formato de e-mail inválido.'))
+    })
+    it('Deve lançar erro de password inválido', async () => {
+        const new_user = {
+            name: 'Vitor',
+            email: 'vitor@gmail.com',
+            password: 'teste12'
+        }
+        await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('Senha deve ter no mínimo 8 caracteres.'))
+    })
+    it('Deve lançar erro de e-mail existente', async () => {
+        const new_user = {
+            name: 'Vitor',
+            email: 'vitor@gmail.com',
+            password: 'teste123'
+        }
+        await signup_user_service.execute(new_user)
+        await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('E-mail já está em uso.'))
     })
 })

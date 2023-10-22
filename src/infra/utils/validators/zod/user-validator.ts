@@ -12,9 +12,9 @@ export default class ZodUserValidator implements Validator<input> {
     validate({name, email, password}: input): void{
         
         const user_schema = z.object({
-            name: z.string().min(5),
-            email: z.string().email(),
-            password: z.string().min(8),
+            name: z.string().min(5, {message: 'Nome inválido.'}),
+            email: z.string().email({message: 'Formato de e-mail inválido.'}),
+            password: z.string().min(8, {message: 'Senha deve ter no mínimo 8 caracteres.'}),
         })
         try{
 
