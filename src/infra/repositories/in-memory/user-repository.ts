@@ -1,6 +1,6 @@
 import UserRepository from "../../../application/contracts/repositories/user-repository";
 import { User } from "../../../domain/entities/user";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 type update_props = {
     id: string,
@@ -10,8 +10,12 @@ type update_props = {
 }
 
 export default class InMemoryUserRepository implements UserRepository {
-
+    
     private users: User[] = []
+    
+    valid_id(id: string): boolean {
+        return validate(id)
+    }
 
     async create(input: User): Promise<void> {
         const new_user = {

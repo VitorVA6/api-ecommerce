@@ -31,5 +31,4 @@ export default class LoginUserService implements LoginUser {
 
         return token
     }
-
 }
