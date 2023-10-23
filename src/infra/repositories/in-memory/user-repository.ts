@@ -3,10 +3,12 @@ import { User } from "../../../domain/entities/user";
 import { v4 as uuid, validate } from 'uuid';
 
 type update_props = {
-    id: string,
-    name: string,
-    email: string,
-    password: string
+    id: string;
+    name: string;
+    phone_number: string;
+    cpf: string;
+    password?: string;
+    confirm_password?: string;
 }
 
 export default class InMemoryUserRepository implements UserRepository {
@@ -35,14 +37,14 @@ export default class InMemoryUserRepository implements UserRepository {
         return user
     }
 
-    async update({id, name, email, password}: update_props): Promise<void> {
+    async update({id, name, cpf, phone_number}: update_props): Promise<void> {
         this.users = await this.users.map(el => {
             if(el.id === id){
                 return ({
                     ...el,
                     name,
-                    email,
-                    password
+                    cpf,
+                    phone_number
                 })
             }
             return el
@@ -52,5 +54,4 @@ export default class InMemoryUserRepository implements UserRepository {
     async delete(id: string): Promise<void> {
         this.users = await this.users.filter(el => el.id !== id)
     }
-
 }

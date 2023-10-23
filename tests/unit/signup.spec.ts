@@ -8,9 +8,11 @@ import BcryptEncrypt from "../../src/infra/utils/bcrypt-encrypter"
 import ZodUserValidator from "../../src/infra/utils/validators/zod/user-validator"
 
 type user_input = {
-    name: string,
-    email: string,
-    password: string
+    name: string;
+    email: string;
+    password: string;
+    phone_number: string;
+    cpf: string;
 }
 
 let zod_user_validator: Validator<user_input>
@@ -31,7 +33,9 @@ describe('Signup user', () => {
         const new_user = {
             name: 'Vitor',
             email: 'vitor@gmail.com',
-            password: 'teste123'
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
         }
         try{
             await signup_user_service.execute(new_user)
@@ -43,7 +47,9 @@ describe('Signup user', () => {
         const new_user = {
             name: 'Vitor',
             email: 'vva@g',
-            password: 'teste123'
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
         }
         await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('Formato de e-mail inválido.'))
     })
@@ -51,7 +57,9 @@ describe('Signup user', () => {
         const new_user = {
             name: 'Vitor',
             email: 'vitor@gmail.com',
-            password: 'teste12'
+            password: 'teste12',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
         }
         await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('Senha deve ter no mínimo 8 caracteres.'))
     })
@@ -59,7 +67,9 @@ describe('Signup user', () => {
         const new_user = {
             name: 'Vitor',
             email: 'vitor@gmail.com',
-            password: 'teste123'
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
         }
         await signup_user_service.execute(new_user)
         await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('E-mail já está em uso.'))

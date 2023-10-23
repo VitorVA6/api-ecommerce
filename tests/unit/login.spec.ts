@@ -12,9 +12,11 @@ import ConcreteJWTHandler from "../../src/infra/utils/concrete-jwt-handler"
 import ZodUserValidator from "../../src/infra/utils/validators/zod/user-validator"
 
 type user_input = {
-    name: string,
-    email: string,
-    password: string
+    name: string;
+    email: string;
+    password: string;
+    phone_number: string;
+    cpf: string;
 }
 
 let memory_user_repository: UserRepository
@@ -37,7 +39,9 @@ describe('Login user', () => {
         const new_user = {
             name: 'Vitor',
             email: 'vitor@gmail.com',
-            password: 'teste123'
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
         }
 
         await signup_user_service.execute(new_user)

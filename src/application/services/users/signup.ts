@@ -5,9 +5,11 @@ import Encrypter from "../../contracts/utils/encrypter";
 import Validator from "../../contracts/utils/validator";
 
 type input = {
-    name: string,
-    email: string,
-    password: string
+    name: string;
+    email: string;
+    password: string;
+    phone_number: string;
+    cpf: string;
 }
 
 export default class SignupUserService implements SignupUser{
@@ -17,14 +19,16 @@ export default class SignupUserService implements SignupUser{
         private readonly encrypter: Encrypter
     ){}
 
-    async execute({name, email, password}: input): Promise<void>{
+    async execute({name, email, password, phone_number, cpf}: input): Promise<void>{
         
-        this.user_validator.validate({name, email, password})
+        this.user_validator.validate({name, email, password, phone_number, cpf})
         
         let new_user: User = {
             name, 
             email, 
-            password, 
+            password,
+            phone_number,
+            cpf,
             role: 'user',
             email_reset_token: undefined,
             password_reset_token: undefined
