@@ -74,4 +74,24 @@ describe('Signup user', () => {
         await signup_user_service.execute(new_user)
         await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('E-mail já está em uso.'))
     })
+    it('Deve lançar erro de número de celular inválido', async () => {
+        const new_user = {
+            name: 'Vitor',
+            email: 'vitor@gmail.com',
+            password: 'teste123',
+            phone_number: '(73) 98122-136',
+            cpf: '066.533.075-81'
+        }
+        await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('Número de celular inválido.'))
+    })
+    it('Deve lançar erro de cpf inválido', async () => {
+        const new_user = {
+            name: 'Vitor',
+            email: 'vitor@gmail.com',
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-8'
+        }
+        await expect(signup_user_service.execute(new_user)).rejects.toThrow(new Error('CPF inválido.'))
+    })
 })
