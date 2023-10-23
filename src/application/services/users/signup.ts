@@ -20,6 +20,8 @@ export default class SignupUserService implements SignupUser{
     ){}
 
     async execute({name, email, password, phone_number, cpf}: input): Promise<void>{
+
+        if(!name || !email || !password || !phone_number || !cpf) throw new Error("Preencha todos os campos")
         
         this.user_validator.validate({name, email, password, phone_number, cpf})
         

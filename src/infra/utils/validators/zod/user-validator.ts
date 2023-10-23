@@ -2,10 +2,10 @@ import Validator from "../../../../application/contracts/utils/validator";
 import {z, ZodError} from 'zod'
 
 type input = {
-    name: string;
-    email: string;
-    phone_number: string;
-    cpf: string;
+    name?: string;
+    email?: string;
+    phone_number?: string;
+    cpf?: string;
     password?: string;
     confirm_password?: string;
 }
@@ -16,13 +16,13 @@ export default class ZodUserValidator implements Validator<input> {
         
         const user_schema = z.object({
             name: z.string().min(5, {message: 'Nome inválido.'}).optional(),
-            email: z.string().email({message: 'Formato de e-mail inválido.'}),
+            email: z.string().email({message: 'Formato de e-mail inválido.'}).optional(),
             password: z.string().min(8, {message: 'Senha deve ter no mínimo 8 caracteres.'}).optional(),
             confirm_password: z.string().optional(),
             phone_number: z.string()
-                .refine(value=>/^\(\d{2}\) \d{4,5}-\d{4}$/.test(value), {message: 'Número de celular inválido.'}),
+                .refine(value=>/^\(\d{2}\) \d{4,5}-\d{4}$/.test(value), {message: 'Número de celular inválido.'}).optional(),
             cpf: z.string()
-                .refine(value=>/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value), {message: 'CPF inválido.'}),
+                .refine(value=>/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value), {message: 'CPF inválido.'}).optional(),
         }).refine((schema) => {
             if(schema.password && schema.confirm_password){
                 return schema.password === schema.confirm_password
