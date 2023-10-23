@@ -17,7 +17,7 @@ type ResponseData = {
 export default class SignupUserController implements Controller {
     constructor(private readonly signup_user_service: SignupUserService) {}
 
-    async handle(http_request: HttpRequest<body, undefined>): Promise<HttpResponse<ResponseData>>{
+    async handle(http_request: HttpRequest<body, any>): Promise<HttpResponse<ResponseData>>{
         const {name, email, password, phone_number, cpf} = http_request.body
 
         try{
@@ -38,6 +38,5 @@ export default class SignupUserController implements Controller {
                 }
             }
         }
-
     }
 }
