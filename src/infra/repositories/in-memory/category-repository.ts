@@ -10,6 +10,11 @@ export default class InMemoryCategoryRepository implements ICategoryRepository {
         return validate(id)
     }
 
+    async find(): Promise<CategoryModel[]>{
+        const categories = await this.categories.map(el => el)
+        return categories
+    }
+
     async create(input: CategoryModel): Promise<CategoryModel> {
         const new_user = {
             id: uuid(),
