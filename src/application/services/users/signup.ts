@@ -12,9 +12,17 @@ type input = {
     cpf: string;
 }
 
+type validator_input = {
+    name?: string;
+    email?: string;
+    phone_number?: string;
+    cpf?: string;
+    password?: string;
+}
+
 export default class SignupUserService implements SignupUser{
     constructor(
-        private readonly user_validator: Validator<input>,
+        private readonly user_validator: Validator<validator_input>,
         private readonly user_repository: UserRepository,
         private readonly encrypter: Encrypter
     ){}

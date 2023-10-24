@@ -7,7 +7,6 @@ type input = {
     phone_number?: string;
     cpf?: string;
     password?: string;
-    confirm_password?: string;
 }
 
 export default class ZodUserValidator implements Validator<input> {
@@ -18,17 +17,11 @@ export default class ZodUserValidator implements Validator<input> {
             name: z.string().min(5, {message: 'Nome inválido.'}).optional(),
             email: z.string().email({message: 'Formato de e-mail inválido.'}).optional(),
             password: z.string().min(8, {message: 'Senha deve ter no mínimo 8 caracteres.'}).optional(),
-            confirm_password: z.string().optional(),
             phone_number: z.string()
                 .refine(value=>/^\(\d{2}\) \d{4,5}-\d{4}$/.test(value), {message: 'Número de celular inválido.'}).optional(),
             cpf: z.string()
                 .refine(value=>/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value), {message: 'CPF inválido.'}).optional(),
-        }).refine((schema) => {
-            if(schema.password && schema.confirm_password){
-                return schema.password === schema.confirm_password
-            }
-            return true
-        }, {message: 'Senhas não batem'})
+        })
 
         try{
             user_schema.parse({name, email, password, phone_number, cpf})

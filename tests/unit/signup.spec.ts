@@ -7,15 +7,15 @@ import InMemoryUserRepository from "../../src/infra/repositories/in-memory/user-
 import BcryptEncrypt from "../../src/infra/utils/bcrypt-encrypter"
 import ZodUserValidator from "../../src/infra/utils/validators/zod/user-validator"
 
-type user_input = {
-    name: string;
-    email: string;
-    password: string;
-    phone_number: string;
-    cpf: string;
+type validator_input = {
+    name?: string;
+    email?: string;
+    phone_number?: string;
+    cpf?: string;
+    password?: string;
 }
 
-let zod_user_validator: Validator<user_input>
+let zod_user_validator: Validator<validator_input>
 let memory_user_repository: UserRepository
 let bcrypt_encrypter: Encrypter
 let signup_user_service: SignupUser
