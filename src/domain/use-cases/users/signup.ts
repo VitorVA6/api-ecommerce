@@ -8,6 +8,6 @@ type input = {
     cpf: string;
 }
 
-export default interface SignupUser {
+export default interface ISignupUser {
     execute: (props: input) => Promise<User>
 }

@@ -1,10 +1,10 @@
-import DeleteAccount from "../../../domain/use-cases/users/delete-account";
-import UserRepository from "../../contracts/repositories/user-repository";
+import IDeleteAccount from "../../../domain/use-cases/users/delete-account";
+import IUserRepository from "../../contracts/repositories/user-repository";
 
-export default class DeleteAccountService implements DeleteAccount {
+export default class DeleteAccountService implements IDeleteAccount {
 
     constructor(
-        private readonly user_repository: UserRepository
+        private readonly user_repository: IUserRepository
     ){}
 
     async execute(id: string): Promise<void>{

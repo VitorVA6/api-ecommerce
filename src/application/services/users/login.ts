@@ -1,19 +1,19 @@
-import LoginUser from "../../../domain/use-cases/users/login";
-import UserRepository from "../../contracts/repositories/user-repository";
-import Encrypter from "../../contracts/utils/encrypter";
-import JWTHandler from "../../contracts/utils/jwt-handler";
+import ILoginUser from "../../../domain/use-cases/users/login";
+import IUserRepository from "../../contracts/repositories/user-repository";
+import IEncrypter from "../../contracts/utils/encrypter";
+import IJWTHandler from "../../contracts/utils/jwt-handler";
 
 type input = {
     email: string,
     password: string
 }
 
-export default class LoginUserService implements LoginUser {
+export default class LoginUserService implements ILoginUser {
 
     constructor(
-        private readonly user_repository: UserRepository,
-        private readonly encryper: Encrypter,
-        private readonly jwt_handler: JWTHandler
+        private readonly user_repository: IUserRepository,
+        private readonly encryper: IEncrypter,
+        private readonly jwt_handler: IJWTHandler
     ) {}
 
     async execute({email, password}: input): Promise<string>{

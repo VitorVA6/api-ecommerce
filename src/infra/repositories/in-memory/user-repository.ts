@@ -1,4 +1,4 @@
-import UserRepository from "../../../application/contracts/repositories/user-repository";
+import IUserRepository from "../../../application/contracts/repositories/user-repository";
 import { UserModel } from "../../../application/models/User";
 import { User } from "../../../domain/entities/user";
 import { v4 as uuid, validate } from 'uuid';
@@ -12,7 +12,7 @@ type update_props = {
     confirm_password?: string;
 }
 
-export default class InMemoryUserRepository implements UserRepository {
+export default class InMemoryUserRepository implements IUserRepository {
     
     private users: User[] = []
     

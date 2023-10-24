@@ -1,7 +1,7 @@
-import UpdateProfile from "../../../domain/use-cases/users/update-profile";
-import BcryptEncrypt from "../../../infra/utils/bcrypt-encrypter";
-import UserRepository from "../../contracts/repositories/user-repository";
-import Validator from "../../contracts/utils/validator";
+import IUpdateProfile from "../../../domain/use-cases/users/update-profile";
+import IBcryptEncrypt from "../../../infra/utils/bcrypt-encrypter";
+import IUserRepository from "../../contracts/repositories/user-repository";
+import IValidator from "../../contracts/utils/validator";
 
 type update_props = {
     id: string;
@@ -20,11 +20,11 @@ type validator_input = {
     password?: string;
 }
 
-export default class UpdateProfileService implements UpdateProfile {
+export default class UpdateProfileService implements IUpdateProfile {
     constructor(
-        private readonly user_validator: Validator<validator_input>,
-        private readonly user_repository: UserRepository,
-        private readonly encrypter: BcryptEncrypt
+        private readonly user_validator: IValidator<validator_input>,
+        private readonly user_repository: IUserRepository,
+        private readonly encrypter: IBcryptEncrypt
     ){}
 
     async execute({id, name, phone_number, cpf, password, new_password}: update_props): Promise<void>{

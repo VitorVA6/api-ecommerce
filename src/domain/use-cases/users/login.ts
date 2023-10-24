@@ -3,6 +3,6 @@ type input = {
     password: string
 }
 
-export default interface LoginUser {
+export default interface ILoginUser {
     execute: (props: input) => Promise<string>
 }

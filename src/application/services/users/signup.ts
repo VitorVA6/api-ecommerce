@@ -1,8 +1,8 @@
 import { User } from "../../../domain/entities/user";
-import SignupUser from "../../../domain/use-cases/users/signup";
-import UserRepository from "../../contracts/repositories/user-repository";
-import Encrypter from "../../contracts/utils/encrypter";
-import Validator from "../../contracts/utils/validator";
+import ISignupUser from "../../../domain/use-cases/users/signup";
+import IUserRepository from "../../contracts/repositories/user-repository";
+import IEncrypter from "../../contracts/utils/encrypter";
+import IValidator from "../../contracts/utils/validator";
 
 type input = {
     name: string;
@@ -20,11 +20,11 @@ type validator_input = {
     password?: string;
 }
 
-export default class SignupUserService implements SignupUser{
+export default class SignupUserService implements ISignupUser{
     constructor(
-        private readonly user_validator: Validator<validator_input>,
-        private readonly user_repository: UserRepository,
-        private readonly encrypter: Encrypter
+        private readonly user_validator: IValidator<validator_input>,
+        private readonly user_repository: IUserRepository,
+        private readonly encrypter: IEncrypter
     ){}
 
     async execute({name, email, password, phone_number, cpf}: input): Promise<User>{

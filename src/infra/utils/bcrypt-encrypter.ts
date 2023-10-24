@@ -1,7 +1,7 @@
-import Encrypter from "../../application/contracts/utils/encrypter";
+import IEncrypter from "../../application/contracts/utils/encrypter";
 import bcrypt from 'bcrypt'
 
-export default class BcryptEncrypt implements  Encrypter{
+export default class BcryptEncrypt implements IEncrypter{
 
     async encrypt(token: string): Promise<string>{
         const encrypted_token = await bcrypt.hash(token, 12)

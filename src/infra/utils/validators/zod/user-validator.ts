@@ -1,4 +1,4 @@
-import Validator from "../../../../application/contracts/utils/validator";
+import IValidator from "../../../../application/contracts/utils/validator";
 import {z, ZodError} from 'zod'
 
 type input = {
@@ -9,7 +9,7 @@ type input = {
     password?: string;
 }
 
-export default class ZodUserValidator implements Validator<input> {
+export default class ZodUserValidator implements IValidator<input> {
 
     validate({name, email, password, phone_number, cpf}: input): void{
         

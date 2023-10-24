@@ -9,7 +9,7 @@ type update_props = {
     confirm_password?: string;
 }
 
-export default interface UserRepository {
+export default interface IUserRepository {
     valid_id: (id: string) => boolean
     create: (input: User) => Promise<User>
     find_by_id: (id: string) => Promise<User | undefined> 

@@ -7,6 +7,6 @@ type update_props = {
     new_password?: string;
 }
 
-export default interface UpdateProfile {
+export default interface IUpdateProfile {
     execute: (props: update_props) => Promise<void>
 }

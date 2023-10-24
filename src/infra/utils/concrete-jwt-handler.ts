@@ -1,7 +1,7 @@
-import JWTHandler from "../../application/contracts/utils/jwt-handler";
+import IJWTHandler from "../../application/contracts/utils/jwt-handler";
 import jwt from 'jsonwebtoken'
 
-export default class ConcreteJWTHandler implements JWTHandler {
+export default class ConcreteJWTHandler implements IJWTHandler {
     
     private secret = 'aoaaoadlkfaoiaf'
     
