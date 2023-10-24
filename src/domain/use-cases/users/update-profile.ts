@@ -4,7 +4,7 @@ type update_props = {
     phone_number: string;
     cpf: string;
     password?: string;
-    confirm_password?: string;
+    new_password?: string;
 }
 
 export default interface UpdateProfile {

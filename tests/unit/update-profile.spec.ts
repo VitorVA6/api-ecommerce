@@ -3,6 +3,7 @@ import Encrypter from "../../src/application/contracts/utils/encrypter"
 import Validator from "../../src/application/contracts/utils/validator"
 import SignupUserService from "../../src/application/services/users/signup"
 import UpdateProfileService from "../../src/application/services/users/update-profile"
+import { User } from "../../src/domain/entities/user"
 import SignupUser from "../../src/domain/use-cases/users/signup"
 import UpdateProfile from "../../src/domain/use-cases/users/update-profile"
 import InMemoryUserRepository from "../../src/infra/repositories/in-memory/user-repository"
@@ -22,6 +23,7 @@ let memory_user_repository: UserRepository
 let bcrypt_encrypter: Encrypter
 let signup_user_service: SignupUser
 let update_profile_service: UpdateProfile
+let user: User
 
 describe('Update profile', () => {
 
@@ -35,23 +37,19 @@ describe('Update profile', () => {
             memory_user_repository, 
             bcrypt_encrypter
         )
+        const new_user = {
+            name: 'Vitor',
+            email: 'vitor@gmail.com',
+            password: 'teste123',
+            phone_number: '(73) 98122-1363',
+            cpf: '066.533.075-81'
+        }
+
+        user = await signup_user_service.execute(new_user)
     })
 
     it('Usuário deve ser atualizado com sucesso', async () => {
         try{
-            const new_user = {
-                name: 'Vitor',
-                email: 'vitor@gmail.com',
-                password: 'teste123',
-                phone_number: '(73) 98122-1363',
-                cpf: '066.533.075-81'
-            }
-    
-            await signup_user_service.execute(new_user)
-
-            const user = await memory_user_repository.find_by_email('vitor@gmail.com')
-            console.log(user)
-            if(!user) fail()
             await update_profile_service.execute({
                 id: user.id!,
                 name: 'Andrew Garfield',
@@ -62,5 +60,40 @@ describe('Update profile', () => {
             fail()
         }
     })
-
+    it('Deve lançar erro de ID inválido', async () => {
+        await expect(update_profile_service.execute({
+            id: 'adfa',
+            name: 'Andrew Garfield',
+            phone_number: '(75) 99999-9999',
+            cpf: '666.888.444-00'})).rejects.toThrow(new Error('ID inválido.')) 
+    })
+    it('Deve lançar erro de nova senha obrigatório se a senha antiga for enviada', async () => {
+        await expect(update_profile_service.execute({
+            id: user.id!,
+            name: 'Andrew Garfield',
+            phone_number: '(75) 99999-9999',
+            cpf: '666.888.444-00',
+            password: 'senhateste'
+        })).rejects.toThrow(new Error("Nova senha é obrigatória."))
+    })
+    it('Deve lançar erro de nova senha inválida', async () => {
+        await expect(update_profile_service.execute({
+            id: user.id!,
+            name: 'Andrew Garfield',
+            phone_number: '(75) 99999-9999',
+            cpf: '666.888.444-00',
+            password: 'senhateste',
+            new_password: 'aasd'
+        })).rejects.toThrow(new Error("Senha deve ter no mínimo 8 caracteres."))
+    })
+    it('Deve lançar erro de senha incorreta', async () => {
+        await expect(update_profile_service.execute({
+            id: user.id!,
+            name: 'Andrew Garfield',
+            phone_number: '(75) 99999-9999',
+            cpf: '666.888.444-00',
+            password: 'senhateste',
+            new_password: 'senhashopee'
+        })).rejects.toThrow(new Error("Senha incorreta."))
+    })
 })
