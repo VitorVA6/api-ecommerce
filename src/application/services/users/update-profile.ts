@@ -35,23 +35,27 @@ export default class UpdateProfileService implements UpdateProfile {
         if(password && !new_password) throw new Error("Nova senha é obrigatória.")
 
         if(!this.user_repository.valid_id(id)) throw new Error('ID inválido.')
-        this.user_validator.validate({name, password, cpf})
+        this.user_validator.validate({name, password: new_password, cpf})
 
         const user = await this.user_repository.find_by_id(id)
         if(!user) throw new Error('Usuário não existe')
 
-        if(password){
+        user.name = name
+        user.cpf = cpf
+        user.phone_number = phone_number
+
+        if(password && new_password){
             const password_match = await this.encrypter.check(password, user.password)
             if(!password_match) throw new Error('Senha incorreta.')
-            const hash_password = await this.encrypter.encrypt(password)
+            const hash_password = await this.encrypter.encrypt(new_password)
             user.password = hash_password
         }
         
         await this.user_repository.update({
             id,
-            name,
-            phone_number,
-            cpf,
+            name: user.name,
+            phone_number: user.phone_number,
+            cpf: user.cpf,
             password: user.password
         })
     }

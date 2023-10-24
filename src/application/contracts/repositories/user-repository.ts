@@ -11,7 +11,7 @@ type update_props = {
 
 export default interface UserRepository {
     valid_id: (id: string) => boolean
-    create: (input: User) => Promise<void>
+    create: (input: User) => Promise<User>
     find_by_id: (id: string) => Promise<User | undefined> 
     find_by_email: (email: string) => Promise<User | undefined>
     update: (props: update_props) => Promise<void>

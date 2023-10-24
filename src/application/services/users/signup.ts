@@ -27,7 +27,7 @@ export default class SignupUserService implements SignupUser{
         private readonly encrypter: Encrypter
     ){}
 
-    async execute({name, email, password, phone_number, cpf}: input): Promise<void>{
+    async execute({name, email, password, phone_number, cpf}: input): Promise<User>{
 
         if(!name || !email || !password || !phone_number || !cpf) throw new Error("Preencha todos os campos")
         
@@ -51,6 +51,7 @@ export default class SignupUserService implements SignupUser{
         const hash_password = await this.encrypter.encrypt(password)
         new_user.password = hash_password
 
-        await this.user_repository.create(new_user)
+        const user = await this.user_repository.create(new_user)
+        return user
     }
 }

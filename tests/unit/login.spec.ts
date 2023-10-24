@@ -4,6 +4,7 @@ import JWTHandler from "../../src/application/contracts/utils/jwt-handler"
 import Validator from "../../src/application/contracts/utils/validator"
 import LoginUserService from "../../src/application/services/users/login"
 import SignupUserService from "../../src/application/services/users/signup"
+import { User } from "../../src/domain/entities/user"
 import LoginUser from "../../src/domain/use-cases/users/login"
 import SignupUser from "../../src/domain/use-cases/users/signup"
 import InMemoryUserRepository from "../../src/infra/repositories/in-memory/user-repository"
@@ -25,6 +26,7 @@ let jwt_handler: JWTHandler
 let zod_user_validator: Validator<validator_input>
 let signup_user_service: SignupUser
 let login_user_service: LoginUser
+let user: User
 
 describe('Login user', () => {
 
@@ -44,7 +46,7 @@ describe('Login user', () => {
             cpf: '066.533.075-81'
         }
 
-        await signup_user_service.execute(new_user)
+        user = await signup_user_service.execute(new_user)
     })
 
     it('Login deve obter sucesso', async () => {
@@ -54,8 +56,6 @@ describe('Login user', () => {
         }
 
         const token = await login_user_service.execute(login_user)
-        const user = await memory_user_repository.find_by_email(login_user.email)
-        if(!user) fail()
 
         const user_info = jwt_handler.validate(token)
 

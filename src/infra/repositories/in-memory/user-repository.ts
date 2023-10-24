@@ -1,4 +1,5 @@
 import UserRepository from "../../../application/contracts/repositories/user-repository";
+import { UserModel } from "../../../application/models/User";
 import { User } from "../../../domain/entities/user";
 import { v4 as uuid, validate } from 'uuid';
 
@@ -19,12 +20,13 @@ export default class InMemoryUserRepository implements UserRepository {
         return validate(id)
     }
 
-    async create(input: User): Promise<void> {
+    async create(input: User): Promise<UserModel> {
         const new_user = {
             id: uuid(),
             ...input
         }
         await this.users.push(new_user)
+        return new_user
     }
 
     async find_by_id(id: string): Promise<User | undefined> {
