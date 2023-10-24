@@ -1,6 +1,6 @@
 import { User } from "../../entities/user";
 
-type input = {
+export type input = {
     name: string;
     email: string;
     password: string;

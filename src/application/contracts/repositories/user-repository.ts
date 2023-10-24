@@ -1,6 +1,6 @@
 import { User } from "../../../domain/entities/user";
 
-type update_props = {
+export type update_props = {
     id: string;
     name: string;
     phone_number: string;

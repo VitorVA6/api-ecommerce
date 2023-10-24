@@ -1,12 +1,7 @@
-import ILoginUser from "../../../domain/use-cases/users/login";
+import ILoginUser, {input} from "../../../domain/use-cases/users/login";
 import IUserRepository from "../../contracts/repositories/user-repository";
 import IEncrypter from "../../contracts/utils/encrypter";
 import IJWTHandler from "../../contracts/utils/jwt-handler";
-
-type input = {
-    email: string,
-    password: string
-}
 
 export default class LoginUserService implements ILoginUser {
 

@@ -1,16 +1,8 @@
 import { User } from "../../../domain/entities/user";
-import ISignupUser from "../../../domain/use-cases/users/signup";
+import ISignupUser, {input} from "../../../domain/use-cases/users/signup";
 import IUserRepository from "../../contracts/repositories/user-repository";
 import IEncrypter from "../../contracts/utils/encrypter";
 import IValidator from "../../contracts/utils/validator";
-
-type input = {
-    name: string;
-    email: string;
-    password: string;
-    phone_number: string;
-    cpf: string;
-}
 
 type validator_input = {
     name?: string;

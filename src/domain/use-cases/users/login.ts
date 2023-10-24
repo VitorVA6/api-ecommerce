@@ -1,4 +1,4 @@
-type input = {
+export type input = {
     email: string,
     password: string
 }

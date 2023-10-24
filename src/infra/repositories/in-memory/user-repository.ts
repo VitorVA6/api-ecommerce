@@ -1,6 +1,5 @@
 import IUserRepository from "../../../application/contracts/repositories/user-repository";
 import { UserModel } from "../../../application/models/User";
-import { User } from "../../../domain/entities/user";
 import { v4 as uuid, validate } from 'uuid';
 
 type update_props = {
@@ -14,13 +13,13 @@ type update_props = {
 
 export default class InMemoryUserRepository implements IUserRepository {
     
-    private users: User[] = []
+    private users: UserModel[] = []
     
     valid_id(id: string): boolean {
         return validate(id)
     }
 
-    async create(input: User): Promise<UserModel> {
+    async create(input: UserModel): Promise<UserModel> {
         const new_user = {
             id: uuid(),
             ...input
@@ -29,12 +28,12 @@ export default class InMemoryUserRepository implements IUserRepository {
         return new_user
     }
 
-    async find_by_id(id: string): Promise<User | undefined> {
+    async find_by_id(id: string): Promise<UserModel | undefined> {
         const user = await this.users.find(el => el.id === id)
         return user
     }
 
-    async find_by_email(email: string): Promise<User | undefined> {
+    async find_by_email(email: string): Promise<UserModel | undefined> {
         const user = await this.users.find(el => el.email === email)
         return user
     }

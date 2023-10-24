@@ -1,16 +1,7 @@
-import IUpdateProfile from "../../../domain/use-cases/users/update-profile";
+import IUpdateProfile, {update_props} from "../../../domain/use-cases/users/update-profile";
 import IBcryptEncrypt from "../../../infra/utils/bcrypt-encrypter";
 import IUserRepository from "../../contracts/repositories/user-repository";
 import IValidator from "../../contracts/utils/validator";
-
-type update_props = {
-    id: string;
-    name: string;
-    phone_number: string;
-    cpf: string;
-    password?: string;
-    new_password?: string;
-}
 
 type validator_input = {
     name?: string;
