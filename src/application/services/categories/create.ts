@@ -8,7 +8,7 @@ type validate_props = {
     url_img?: string
 } 
 
-export default class CreateCategory implements ICreateCategory{
+export default class CreateCategoryService implements ICreateCategory{
     constructor(
         private readonly category_validator: IValidator<validate_props>,
         private readonly category_repository: ICategoryRepository

@@ -2,7 +2,7 @@ import ICategoryRepository, {} from "../../../application/contracts/repositories
 import { CategoryModel } from "../../../application/models/Category";
 import { v4 as uuid, validate } from 'uuid';
 
-export default class InMemoryUserRepository implements ICategoryRepository {
+export default class InMemoryCategoryRepository implements ICategoryRepository {
     
     private categories: CategoryModel[] = []
     
