@@ -49,11 +49,13 @@ describe('Delete user', () => {
             fail()
         }
     })
+
     it('Deve lançar erro de ID inválido', async () => {
         await expect(delete_account_service.execute('aadf'))
         .rejects.toThrow(new Error('ID inválido')) 
     })
-    it('Deve lançar erro de ID inválido', async () => {
+
+    it('Deve lançar erro de usuário inexistente', async () => {
         await expect(delete_account_service.execute('4be3dc6e-3562-40b4-8eba-417715d85039'))
         .rejects.toThrow(new Error('Usuário não existe')) 
     })
