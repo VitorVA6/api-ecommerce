@@ -2,15 +2,6 @@ import IUserRepository from "../../../application/contracts/repositories/user-re
 import { UserModel } from "../../../application/models/User";
 import { v4 as uuid, validate } from 'uuid';
 
-type update_props = {
-    id: string;
-    name: string;
-    phone_number: string;
-    cpf: string;
-    password?: string;
-    confirm_password?: string;
-}
-
 export default class InMemoryUserRepository implements IUserRepository {
     
     private users: UserModel[] = []
@@ -38,14 +29,11 @@ export default class InMemoryUserRepository implements IUserRepository {
         return user
     }
 
-    async update({id, name, cpf, phone_number}: update_props): Promise<void> {
+    async update(input: UserModel): Promise<void> {
         this.users = await this.users.map(el => {
-            if(el.id === id){
+            if(el.id === input.id){
                 return ({
-                    ...el,
-                    name,
-                    cpf,
-                    phone_number
+                    ...input
                 })
             }
             return el

@@ -42,12 +42,6 @@ export default class UpdateProfileService implements IUpdateProfile {
             user.password = hash_password
         }
         
-        await this.user_repository.update({
-            id,
-            name: user.name,
-            phone_number: user.phone_number,
-            cpf: user.cpf,
-            password: user.password
-        })
+        await this.user_repository.update(user)
     }
 }

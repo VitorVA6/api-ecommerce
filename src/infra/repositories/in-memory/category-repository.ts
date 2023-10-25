@@ -34,13 +34,11 @@ export default class InMemoryCategoryRepository implements ICategoryRepository {
         return user
     }
 
-    async update({id, name, url_img}: CategoryModel): Promise<void> {
+    async update(category: CategoryModel): Promise<void> {
         this.categories = await this.categories.map(el => {
-            if(el.id === id){
+            if(el.id === category.id){
                 return ({
-                    ...el,
-                    name,
-                    url_img
+                    ...category
                 })
             }
             return el
